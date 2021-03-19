@@ -1,0 +1,40 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int a[6]={1,1,2,2,3,3};
+    int b[5]={8,9,7,6,5};
+    int n=6;
+    int m=5;
+    
+        int arr[11],i,j;
+        
+        for(i=0;i<n;i++){
+            arr[i] = a[i];
+        }
+        
+        for(j=0;j<m;j++,i++){
+            arr[i] = b[j];
+        }
+        
+        sort(arr,arr+(m+n));
+        
+        for(int k=0;k<m+n;k++){
+            cout<<arr[k]<<" ";
+        }
+        
+        int count= 1;
+        for(i=0;i<m+n-1;i++){
+            if(arr[i]!=arr[i+1])
+                {
+                    count++;
+                }
+                
+        }
+        cout<<"\n"<<count;
+    
+    
+    return 0;
+}
