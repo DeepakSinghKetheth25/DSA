@@ -1,0 +1,35 @@
+int minJumps(int arr[], int n){
+    
+    int i=0,j,jumps = 0,max=arr[0],pos=0;
+    
+    while(i<n){
+        
+        j = arr[pos];
+        
+        if(j==0)
+            return -1;
+        if(j>=(n-1-pos))
+        {
+            jumps++;
+            return jumps;
+        }
+        
+        max = -1;
+        int current_index = i;
+        int maxpos;
+        for(int k=(current_index+1); k<=(pos+arr[pos]) && k<n;k++){
+            if(max<arr[k]+k)
+            {
+                max = k + arr[k];
+                maxpos=k;
+            }
+            i++;
+        }
+        pos = maxpos;
+        
+        if(i>=max)
+            return -1;
+        jumps++;
+    }
+    return jumps;
+}
