@@ -1,0 +1,28 @@
+class Solution {
+public:
+    
+    //1. This is n2 solution
+    
+    //2. We can have a nlogn solution using binary search. 
+    //For every element we send the vector & present index to binary search,
+    //If using binary search element is found & index is not same then it means duplicate is present.
+
+    //O(n) Solution    
+    int findDuplicate(vector<int>& nums) {
+        
+         while(true)
+        {
+            if(nums[0]==nums[nums[0]]){
+                break;
+            }
+               
+            int temp = nums[nums[0]];
+            nums[nums[0]] = nums[0];
+            nums[0] = temp;
+            
+        }
+        return nums[0];
+    }
+    
+    
+};
