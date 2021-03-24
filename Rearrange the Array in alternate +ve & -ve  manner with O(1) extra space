@@ -1,0 +1,116 @@
+
+class Solution{
+public:
+
+
+//Space Complexity O(1) & T(n) = O(n^2), Order is Maintained
+void rightRotate(int arr[],int start,int end){
+    
+    int x = end-1;
+    int temp = arr[end];
+    while(x>=start){
+        arr[x+1]=arr[x];
+        x--;
+    }
+    arr[start]=temp;
+}
+
+void rearrange(int arr[],int n){
+    
+    int outofPlace = -1;
+    
+    for(int i=0;i<n;i++){
+        
+        if(outofPlace>=0){
+            
+            if((arr[outofPlace]>=0 && arr[i]<0) || 
+                (arr[outofPlace]<0 && arr[i]>=0))
+                {
+                    rightRotate(arr,outofPlace,i);
+                    if(i-outofPlace>=2)
+                        outofPlace+=2;
+                    else 
+                        outofPlace=-1;
+                }
+            
+        }
+        
+        if(outofPlace == -1){
+            if((arr[i]>=0 && (i&1)) || (arr[i]<0 && !(i&1)))
+                outofPlace = i;            
+        }
+        
+    }
+    
+    
+}
+
+
+//Space Complexity O(n), T(n) = O(n), Order is Maintained
+	void rearrange(int arr[], int n) {
+	    
+        vector<int>aux;
+	    int i=0,j=0;
+	    for(i=0;i<n;i++){
+	        if(arr[i]>=0)
+	            aux.push_back(arr[i]);
+	    }
+	    for(j=0;j<n;j++){
+	        if(arr[j]<0)
+	            aux.push_back(arr[j]);
+	    }
+
+	    if(aux[0]<0 || (aux[0]>=0 && aux[1]<0))
+	        return ;
+	        
+	    
+	    int neg=0;
+	    while(neg<n)
+	    {
+	        if(aux[neg]<0)
+	            break;
+	        neg++;
+	    }
+
+	    
+	    j=neg;
+	    i=0;
+	    int start=0;
+	    while(i<neg && j<n)
+	    {
+	        arr[start++]=aux[i++];
+	        arr[start++]=aux[j++];
+	    }
+	    
+	    while(i<neg)
+	        arr[start++] = aux[i++];
+	    
+	    while(j<n)
+	        arr[start++] = aux[j++];
+	    
+
+	}
+};
+
+// { Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, i;
+        cin >> n;
+        int arr[n];
+        for (i = 0; i < n; i++) {
+            cin >> arr[i];
+        }
+        Solution ob;
+        ob.rearrange(arr, n);
+        for (i = 0; i < n; i++) {
+            cout << arr[i] << " ";
+        }
+        cout << "\n";
+    }
+    return 0;
+}
+  // } Driver Code Ends
