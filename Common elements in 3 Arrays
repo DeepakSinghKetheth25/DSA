@@ -1,0 +1,54 @@
+
+class Solution
+{
+    public:    
+       vector <int> commonElements (int arr1[], int arr2[], int arr3[], int n1, int n2, int n3)
+        {
+            vector<int>common ; 
+            int i=0,j=0,k=0,temp=INT_MIN;
+            while(i<n1 && j<n2 && k<n3){
+                
+                //Keep increment i till element of 1st array is less than that of array 2nd 
+                if(arr1[i]<arr2[j])
+                    {
+                        i++;
+                        continue;
+                    }
+                    
+                //Keep increment j till element of 2nd array is less than that of array 1st
+                if(arr1[i]>arr2[j])
+                    {
+                        j++;
+                        continue;
+                    }
+                
+                //If control reaches here it means, arr1[i]==arr2[j]
+                
+                //If element of 3rd array is less than arr1[i] or arr2[j] 
+                if(arr3[k]<arr1[i])
+                    {
+                        k++;
+                        continue;
+                    }
+                
+                //If element of 3rd array is greater than arr1[i] or arr2[j] 
+                //then increment i & j and again search for next equal element.
+                if(arr3[k]>arr1[i])
+                    {
+                        i++;j++;
+                        continue;
+                    }
+                
+                //To avoid storing duplicate elements 
+                if(temp!=arr1[i])
+                    {   
+                        temp=arr1[i];
+                        common.push_back(arr1[i]);
+                    }
+                    i++;j++;k++;
+            }
+        return common;
+        }
+
+
+};
