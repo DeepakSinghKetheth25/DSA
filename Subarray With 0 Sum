@@ -1,0 +1,24 @@
+
+class Solution{
+    public:
+    //1.Solution : Finding sum for all sub arrays, O(n^2)
+    //2.Solution : Using hashing - T(n)-> O(n), Space -> O(n)
+    bool subArrayExists(int arr[], int n)
+    {
+        map<int,int>m;
+        
+        int sum = 0;
+        for(int i=0;i<n;i++){
+            sum+=arr[i];
+            if(sum==0)
+                return true;
+            if(m.find(sum)==m.end())
+            {
+                m.insert({sum,i});
+            }
+            else
+                return true;
+        }
+        return false;
+    }
+};
