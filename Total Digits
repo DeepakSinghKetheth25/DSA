@@ -1,0 +1,28 @@
+
+//Given a number n, count the total number of digits required to write all numbers from 1 to n.
+
+class Solution {
+  public:
+    long long int totalDigits(long long int n){
+        
+        long long int digits=0;
+        long long int num = n;
+        while(n>0){
+            n=n/10;
+            digits++;
+        }
+        
+        long long int count = 0;
+        string s ="";
+        for(int i=1; i<digits;i++){
+            s+='9';
+            if(i!=1)
+                count = count + ( stoi(s) - pow(10,i-1) +1 )*i;
+            else
+                count = count + (stoi(s))*i;     
+        }
+        count = count+ (num - pow(10,digits-1)+1)*digits; 
+        return count;
+        
+    }
+};
