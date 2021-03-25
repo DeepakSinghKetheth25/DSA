@@ -1,0 +1,46 @@
+#define MAX 3000
+
+class Solution {
+public:
+    
+    int multiply(vector<int>& res, int size, int n){
+        
+        int carry = 0;
+        int product = 1; 
+        for(int i=0;i<size;i++){
+            product = res[i]*n + carry;
+            res[i] = product%10;
+            carry = product/10;
+        }
+        
+        while(carry){
+            res[size] = carry%10;
+            carry=carry/10;
+            size++;
+        }
+        
+        return size;
+    }
+
+    vector<int> factorial(int N){
+        
+        vector<int>res(MAX);
+        
+        res[0]=1;
+        int size = 1;
+        for(int i=2;i<=N;i++){
+            size = multiply(res,size,i);
+        }
+
+        int end = size-1;
+        for(int i=0;i<size/2;i++){
+            int temp = res[i];
+            res[i] = res[end];
+            res[end] = temp;
+            end--;
+        }
+        res.resize(size);
+        
+        return res;
+    }
+};
