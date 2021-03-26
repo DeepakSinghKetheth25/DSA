@@ -1,0 +1,70 @@
+
+// A C++ program to print elements with count more than n/k (k=3, in this case)
+
+class Solution {
+public:
+
+    vector<int> majorityElement(vector<int>& nums) {
+        
+        int k=3;
+        if(k<2)
+          return;
+        
+        vector<pair<int,int>> candidate(k-1);
+        
+        for(int i=0;i<k-1;i++){
+            candidate[i].first = INT_MAX;
+            candidate[i].second = 0;
+        }
+           
+        for(int i=0;i<nums.size();i++){
+            
+            int j=0;
+            
+            while(j<k-1){
+                if(nums[i] == candidate[j].first){
+                    candidate[j].second++;
+                    break;
+                }
+                j++;
+            }
+            
+            
+            if(j==k-1){
+                
+                j=0;
+                //If empty space lies inside candidates
+                while(j<k-1)
+                {
+                    if(candidate[j].second == 0)
+                    {
+                        candidate[j].second = 1;
+                        candidate[j].first = nums[i];
+                        break;
+                    }
+                    j++;
+                }
+                
+                if(j==k-1){
+                    for(int p=0;p<k-1;p++)
+                        candidate[p].second--;
+                } 
+            }
+        }
+    
+            
+            vector<int>res;
+            
+            for(int i=0;i<k-1;i++){
+                int freq=0;
+                for(int j=0;j<nums.size();j++){
+                    if(candidate[i].first == nums[j])
+                        freq++;
+                }
+                if(freq > nums.size()/k)
+                    res.push_back(candidate[i].first);
+            }
+            
+            return res;
+    }
+};
