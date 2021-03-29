@@ -1,0 +1,16 @@
+long long findMinDiff(vector<long long> a, long long n, long long m){
+    
+    sort(a.begin(),a.end());
+    
+    long long diff = a[m-1]-a[0];
+    long long newdiff;
+    for(int i=1;i+m<=n;i++){
+        
+        newdiff = (a[i+m-1] - a[i]);
+        if(diff>newdiff)
+            diff = newdiff;
+    }
+    
+    return diff;
+
+}
