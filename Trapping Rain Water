@@ -1,0 +1,46 @@
+Time Complexity-> O(n)
+Space Complexity -> O(n)
+Approach : Maintain LeftMax & RightMax for every element. 
+           Water Stored at present index,(i) = min(leftmax,rightmax) - arr[i];
+            
+
+class Solution{
+
+    // Function to find the trapped water between the blocks.
+    public:
+    int trappingWater(int arr[], int n){
+        // Code here
+        
+        int larr[n];//Left Max Array which for every element stores max value out of all left elements
+        int rarr[n];//Right Max Array which for every element stores max value out of all right elements
+        larr[0] = arr[0];
+        rarr[n-1] = arr[n-1];
+        int amount = 0;//Total Amount Of Water
+        
+        int lmax = arr[0];//Set left max to arr[0]
+        int  rmax = arr[n-1];//Set right max to arr[n-1]
+        
+        
+        //Creating the leftmax array
+        for(int i=1;i<n;i++){
+            larr[i] = max(lmax,arr[i-1]);
+            if(lmax<arr[i-1])
+                lmax = arr[i-1];
+        }
+        
+        //Creating right max array
+        for(int i=n-2;i>=0;i--){
+            rarr[i] = max(rmax,arr[i+1]);
+            if(rmax<arr[i+1])
+                rmax = arr[i+1]; 
+        }
+
+        
+        for(int i=1;i<n-1;i++){
+            if(min(larr[i],rarr[i])-arr[i] > 0)
+                amount= amount + min(larr[i],rarr[i])-arr[i];
+        }
+        return amount;
+        
+    }
+};
