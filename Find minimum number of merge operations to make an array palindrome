@@ -1,0 +1,47 @@
+//Time Complexity -> O(n)
+//Space Complexity -> O(1)
+Approach -> 1.Place i=0 & j=n-1, if a[i] == a[j] then increment i & decrement j. i.e go to next elements 
+            2. Loop till i<=j
+            3. a[i]<a[j] then do merging at the side where element is smaller i.e in this case at i side.
+                a[i+1] = a[i] + a[i+1]; increment i .
+            4. a[j]<a[i] then do merging at the side where element is smaller i.e in this case at j side.
+                a[j-1] = a[j] + a[j-1]; decrement j .
+            
+
+
+int findMinOps(int arr[], int n)
+{
+    int ans = 0; // Initialize result
+  
+    // Start from two corners
+    for (int i=0,j=n-1; i<=j;)
+    {
+        // If corner elements are same,
+        // problem reduces arr[i+1..j-1]
+        if (arr[i] == arr[j])
+        {
+            i++;
+            j--;
+        }
+  
+        // If left element is greater, then
+        // we merge right two elements
+        else if (arr[i] > arr[j])
+        {
+            // need to merge from tail.
+            j--;
+            arr[j] += arr[j+1] ;
+            ans++;
+        }
+  
+        // Else we merge left two elements
+        else
+        {
+            i++;
+            arr[i] += arr[i-1];
+            ans++;
+        }
+    }
+  
+    return ans;
+}
