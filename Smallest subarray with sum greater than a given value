@@ -1,0 +1,26 @@
+
+class Solution{
+  public:
+
+    int sb(int arr[], int n, int x)
+    {
+        
+        int curr_sum = 0, start = 0,end = 0, min_length = n+1;
+        
+        while(end<n){
+            
+            while(curr_sum <= x && end<n){
+                curr_sum+=arr[end++];
+            }
+            
+            while(curr_sum > x && start<n){
+            
+                if(min_length > (end-start))
+                    min_length = end-start;
+                    
+                curr_sum-=arr[start++];
+            }
+        }
+         return min_length;
+    }
+};
