@@ -1,0 +1,32 @@
+//Time Complexity -> O(n)
+//Space Complexity -> O(1)
+//Approach : 1. Find the count of numbers(count) in the array which are less than or equal to k. 
+             2. This 'count' is going to be our window size because we need to bring "count" elements together.
+             3. Starting from first element for every window of size (count), find the number of elements(badcount) which are greater than k.
+             4. For the present window this bad count is the number of swaps required to bring all (count) elements together.
+             5. Find the minimum bad count of all the windows & return it, as it will be our answer.
+            
+int minSwap(int *arr, int n, int k) {
+    
+    int count = 0; 
+    for (int i = 0; i < n; ++i) 
+        if (arr[i] <= k) 
+            ++count; 
+      
+    int bad = 0; 
+    for (int i = 0; i < count; ++i) 
+        if (arr[i] > k) 
+            ++bad; 
+      
+    int ans = bad; 
+    for (int i = 0, j = count; j < n; ++i, ++j) { 
+        if (arr[i] > k) 
+            --bad; 
+          
+        if (arr[j] > k) 
+            ++bad; 
+          
+        ans = min(ans, bad); 
+    } 
+    return ans; 
+}
