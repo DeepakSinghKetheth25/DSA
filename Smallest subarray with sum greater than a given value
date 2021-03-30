@@ -1,3 +1,9 @@
+//Time Complexity -> O(n)
+//Space Comlpexity -> O(1)
+//Approach : Using Sliding Window. 
+            1. Starting from 1st index find the subarray whose sum is greater than x.
+            2. After that, in that subarray, add a new element & remove the first element, till sum of subarray is greater than x. 
+               & keep track of minimum no. of such elements whose sum is greater than x.    
 
 class Solution{
   public:
