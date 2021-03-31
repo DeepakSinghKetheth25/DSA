@@ -1,0 +1,41 @@
+//Time Complexity -> O(n*m)
+//Space Complexoty -> O(n*m) Space Complexity can be reduced to O(1) by directly printing the elements.
+//Approach : 1. Print 1st row then increment starting_row.
+             2. Print last row & decrement size of columns by 1.
+             3. Print last row & decrement size of rows by 1.
+             4. Print first row & increment starting_column by 1.
+
+class Solution
+{   
+public:     
+    vector<int> spirallyTraverse(vector<vector<int> > arr, int n, int m) 
+    {
+        
+        vector<int> res;
+        int sr = 0, sc = 0, i=0;
+        
+        while(sr<n && sc<m){
+            
+            for(i=sc;i<m;i++)
+                res.push_back(arr[sr][i]);
+            sr++;
+            
+            for(i=sr;i<n;i++)
+                res.push_back(arr[i][m-1]);
+            m--;
+            
+            if(sr<n){
+                for(i=m-1;i>=sc;i--)
+                    res.push_back(arr[n-1][i]);
+                n--;
+            }
+            
+            if(sc<m){
+                for(i=n-1;i>=sr;i--)
+                    res.push_back(arr[i][sc]);
+                sc++;
+            }
+        }
+        return res;
+    }
+};
