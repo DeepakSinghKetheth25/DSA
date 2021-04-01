@@ -1,0 +1,38 @@
+//Time Complexity -> O(n)
+//Space Complexity -> O(1)
+
+class Solution
+{
+    public:
+    
+    struct node *reverseUtil(struct node *head,int k, int count, struct node *prev, struct node *curr)
+    {
+        
+        if(curr==NULL || curr->next==NULL)
+        {
+            curr->next = prev;
+            return curr;
+        }
+        
+        count++;
+        
+        struct node *next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        
+        if(count!=k)
+            return reverseUtil(head,k,count,curr,next);
+        else
+        {
+            prev=NULL;
+            head->next = reverseUtil(next,k,0,prev,next);
+            return curr;
+        }
+    }
+    
+    struct node *reverse (struct node *head, int k)
+    { 
+        // Complete this method
+        return reverseUtil(head,k,0,NULL,head);
+    }
+};
