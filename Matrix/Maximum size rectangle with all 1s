@@ -1,0 +1,66 @@
+Time Complexity -> O(m*n)
+Space Complexity -> O(m) , but can be reduced by adding up in the same array & not in the new array
+Approach : ->  This solution uses, largest rectangle under histogram as a subroutine. 
+              1) For every row do following : 
+                a) if(ar[i][j] == 1) { ar[i][j] += arr[i-1][j] } , because if element is 0 then we want to keep it as 0 only.
+                b) for this row calculate area using histogram concept. (makes use of stack).
+                c) If this area is greater than overall maxArea then update, maxArea = max(area,maxArea).
+                d) return maxArea.
+                
+
+class Solution{
+  public:
+  
+    int findcurrMaxArea(int area[], int m){
+        
+        stack<int> st;
+        int i = 0;
+        int elementindex; 
+        int maxArea = INT_MIN;
+        int currArea = 0;
+        while(i<m){
+            
+            if(st.empty() || area[i]>=area[st.top()])
+                st.push(i++);
+            
+            else{
+                elementindex = st.top();
+                st.pop();
+                
+                currArea = area[elementindex]*(st.empty() ? i : i-st.top()-1); 
+                maxArea = max(maxArea,currArea);
+            }
+        }
+        
+        while(!st.empty()){
+            
+            elementindex = st.top();
+            st.pop();
+            
+            currArea = area[elementindex]*(st.empty() ? i:(i-st.top()-1));
+            maxArea = max(maxArea,currArea);
+        }
+        return maxArea;
+    } 
+  
+    int maxArea(int M[MAX][MAX], int n, int m) {
+        
+        int maxArea = INT_MIN;
+        int area[m]={0};
+        
+        for(int i=0;i<n;i++){
+            
+            for(int j=0;j<m;j++){
+                if(M[i][j]) 
+                    area[j]+=M[i][j];
+                else
+                    area[j]=0;
+            }
+            
+            int currArea = findcurrMaxArea(area,m);
+
+            maxArea = max(maxArea,currArea); 
+        }
+        return maxArea;
+    }
+};
