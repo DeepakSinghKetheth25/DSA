@@ -1,0 +1,68 @@
+Solution 1:
+//Time Comlexity -> O(n)
+//Space Complecity -> O(1)
+//Approach : 1. Detect Cycle using Floyd's Cycle Algorithm
+             2. Count nodes in loop.
+             3  Move one pointer ptr2, k nodes from the beginning.
+             4. Move ptr1(pointing at head) & ptr2 at same pace, they will meet at starting point of the loop.
+             5. Move one pointer ptr2 till ptr2->next!=ptr1, 
+                i) If ptr2->next==ptr1, then set ptr2->next = NULL.
+                
+
+class Solution
+{
+    public:
+    //Function to remove a loop in the linked list.
+    
+    void removeUtil(Node *loopNode, Node *head){
+        
+        Node *ptr1=head, *ptr2=loopNode;
+        
+        int count=1;
+        while(ptr2->next!=loopNode){
+           count++;
+           ptr2 = ptr2->next;
+        }
+        
+        ptr2=head;
+        for(int i=0;i<count;i++){
+            ptr2=ptr2->next;
+        }
+        
+        while(ptr1!=ptr2){
+            ptr1=ptr1->next;
+            ptr2=ptr2->next;
+        }
+        
+
+        while(ptr1->next!=ptr2)
+            ptr1=ptr1->next;
+        
+        ptr1->next=NULL;
+        
+    }
+    void removeLoop(Node* head)
+    {
+        
+        Node *slow=head,*fast=head,*temp=NULL;
+        
+        while(slow && fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow==fast)
+            {
+                removeUtil(slow,head);
+                break;
+            }
+        }
+    }
+};
+
+Solution 2: 
+Time Complexity -> O(n)
+Space Complexity -> O(n)
+Approach -> Hashing
+            i) ptr=head, temp=NULL, Keep storing ptr in map, if it doesn't exist already .
+            ii) temp=ptr , ptr=ptr->next
+            iii) if ptr already exists in map, then temp->next = NULL.
+
