@@ -1,0 +1,43 @@
+Solution 1: 
+//Time Complexity -> O(n*n)
+//Space Complexity -> O(1)
+//Approach : Brute Force , Using two loops
+
+Solution 3: 
+//Approach : Use Sorting, & then the problem is equivalent to => Remove duplicates from sorted linked list.
+
+Solution 2:
+//Time Complexity -> O(n)
+//Space Complexity -> O(n)
+//Approach : Use Hashing
+
+class Solution
+{
+    public:
+    //Function to remove duplicates from unsorted linked list.
+    Node * removeDuplicates( Node *head) 
+    {
+        set<int>st;
+        
+        Node *ptr = head;
+        
+        st.insert(head->data);
+        
+        while(ptr!=NULL && ptr->next!=NULL)
+        {
+            if(st.find(ptr->next->data)==st.end())
+            {
+                st.insert(ptr->next->data);
+                ptr=ptr->next;
+            }
+            else
+            {
+                Node *temp = ptr->next;
+                ptr->next = ptr->next->next;
+                delete(temp);
+            }
+        }
+        
+        return head;
+    }
+};
