@@ -1,0 +1,73 @@
+Solution 1:  Using Recursion
+//Time Complexity -> O(n)
+//Space Complexity -> O(1)
+Approach : Use recursion to go till last node & add 1 to it. & return carry backwards to every node.
+            Using this we will easily get rid of reversing the linkedlist.
+
+Solution 2: 
+//Time Complexity -> O(n)
+//Space Complexity -> O(1)
+//Approach : i) Reverse a linkedlist.
+              ii) Set a variable carry = 1.
+              iii) Iterate ptr from head till end,
+                  a) set ptr->data = (ptr->data+carry) 
+                  b) if ptr->data <=9 break; Reverse the link list once again & return head.
+                  c) else if (ptr->next==NULL) it means this is last node & its value is >=9 (after adding carry)
+                      i) then, break.  
+                  d) else, ptr->data = ptr->data%10  , carry = carry/10;
+                  
+class Solution
+{
+    public:
+    Node* addOne(Node *head) 
+    {
+        if(head->next == NULL)
+            {   head->data+=1;
+                return head;
+            }
+        
+        //Reverse    
+        Node *prev=NULL,*curr=head,*next=NULL;
+        while(curr!=NULL){
+            
+            next = curr->next;
+            curr->next = prev;
+            prev=curr;
+            
+            curr=next;
+        }head = prev;
+        
+        
+        Node *ptr = head;
+        int carry = 1;
+        while(ptr!=NULL)
+        {
+            ptr->data+=carry;
+            if(ptr->data<=9)
+                break;
+            else if(ptr->next==NULL)
+            {
+                break;
+            }
+            else
+            {
+                carry=1;
+                ptr->data = 0;
+                ptr=ptr->next;
+            }
+        }
+        
+        //Reverse
+        prev=NULL, curr=head, next = NULL;
+        while(curr!=NULL){
+            
+            next = curr->next;
+            curr->next = prev;
+            prev=curr;
+            
+            curr=next;
+        }head = prev;
+        
+        return head;
+    }
+};
