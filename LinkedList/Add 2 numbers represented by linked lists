@@ -1,5 +1,7 @@
 //Time Complexity -> O(n)
 //Space Complexity -> O(1)
+//Approach : Reverse the two linked lists and then add and carryforward if there is any carry.
+
 class Solution
 {
     public:
