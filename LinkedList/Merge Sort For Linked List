@@ -1,0 +1,46 @@
+//Time Complexity- > O(n*log(n))
+//Space Complexity -> O(n)
+
+class Solution{
+  public:
+    //Function to sort the given linked list using Merge Sort.
+    Node* merge(Node *ptr1, Node* ptr2){
+    
+        if(ptr1==NULL)
+            return ptr2;
+        else if(ptr2==NULL)
+            return ptr1;
+        
+        Node *result=NULL;
+        if(ptr1->data <= ptr2->data){
+            result = ptr1;
+            result->next = merge(ptr1->next, ptr2);  
+        }
+        else{
+            result = ptr2;
+            result->next = merge(ptr1,ptr2->next);
+        }
+        return result;
+    }
+    
+    Node* mergeSort(Node* head) {
+        
+        if(head==NULL || head->next==NULL)
+            return head;    
+        
+        Node *slow=head,*fast=head->next;
+        while(slow && fast && fast->next !=NULL)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        Node *ptr1 = head,*ptr2 = slow->next;
+        slow->next=NULL;
+        
+        ptr1=mergeSort(ptr1);
+        ptr2=mergeSort(ptr2);
+        
+        head = merge(ptr1,ptr2);
+        return head;
+    }
+};
