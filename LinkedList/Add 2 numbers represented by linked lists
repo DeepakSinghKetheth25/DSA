@@ -1,0 +1,82 @@
+//Time Complexity -> O(n)
+//Space Complexity -> O(1)
+class Solution
+{
+    public:
+    //Function to add two numbers represented by linked list.
+    Node* reverse(Node *ptr, int *count){
+        
+        Node *prev=NULL,*curr=ptr,*next=NULL;
+            while(curr!=NULL){
+                (*count)++;
+                next = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr=next;
+            }ptr = prev;
+        return ptr;
+    }
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+            int count1=0,count2=0;
+            first = reverse(first,&count1);
+            second = reverse(second,&count2);
+            
+            Node *ptr1 = first;
+            Node *ptr2 = second;
+            
+            int carry = 0;
+            while(ptr1!=NULL || ptr2!=NULL){
+            
+                if(ptr1==NULL){
+
+                        ptr2->data+=carry; 
+                        carry = ptr2->data/10;
+                        ptr2->data=ptr2->data%10;  
+                        ptr2=ptr2->next;
+                }
+                else if(ptr2==NULL){
+                        ptr1->data+=carry;
+                        carry = ptr1->data/10;
+                        ptr1->data = ptr1->data%10;
+                        ptr1=ptr1->next;
+                }
+                else
+                {
+                    int x = ptr1->data;
+                    ptr1->data = ptr1->data+ptr2->data+carry;
+                    ptr2->data = x+ptr2->data+carry;
+                    
+                    carry = ptr1->data/10;
+                    ptr1->data = ptr1->data%10;
+                    ptr2->data = ptr2->data%10;
+                    
+                    ptr1=ptr1->next;
+                    ptr2=ptr2->next;
+                }
+            }
+            
+            count1=0,count2=0;
+            first = reverse(first,&count1);
+            second = reverse(second,&count2);
+            
+            if(carry && count1>=count2)
+            {
+                Node *temp = new Node(carry);
+                temp->next = first;
+                first = temp;
+                return first;
+            }
+            else if(carry)
+            {
+                Node *temp = new Node(carry);
+                temp->next = second;
+                second = temp;
+                return second;
+            }
+            else if(count1>=count2)
+                return first;
+            return second;
+            
+    }
+};
