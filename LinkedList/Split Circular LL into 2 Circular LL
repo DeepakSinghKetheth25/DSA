@@ -1,0 +1,30 @@
+//Time Complexity -> O(n/2) = O(n)
+//Space Complexity -> O(1)
+//Use Slow & Fast Pointers
+
+void splitList(Node *head, Node **head1_ref, Node **head2_ref)
+{
+    
+    *head1_ref=head,*head2_ref=head;
+    while((*head2_ref)->next!=head && (*head2_ref)->next->next!=head){
+        
+        *head1_ref = (*head1_ref)->next;
+        *head2_ref = (*head2_ref)->next->next;
+    }
+    
+    Node *temp=NULL;
+    
+    if((*head2_ref)->next==head)
+        {
+            (*head2_ref)->next = (*head1_ref)->next;
+            *head2_ref = (*head1_ref)->next;
+        }
+    else
+        {
+            (*head2_ref)->next->next = (*head1_ref)->next;    
+            *head2_ref = (*head1_ref)->next;
+        }
+    
+    (*head1_ref)->next = head;
+    *head1_ref = head;
+}
