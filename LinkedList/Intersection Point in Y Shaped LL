@@ -1,0 +1,55 @@
+//Time complexity -> O(M+N)
+//Space Complexity -> O(1)
+//Approach : i) Fine lengths of both LL.
+             ii) Traverse Longer LL till the d where (d= abs(M-N))
+             iii) Traverse both LL at same pace 
+             iv) If both pointers are same then return that number;
+
+
+int countNodes(Node *head){
+    int count=0;
+    while(head!=NULL){
+        count++;
+        head=head->next;
+    }
+    return count;
+}
+
+int intersectPoint(Node* head1, Node* head2)
+{
+        int count1 = countNodes(head1);
+        int count2 = countNodes(head2);
+        
+        int diff = abs(count1-count2);
+        
+        Node *ptr=NULL, *ptr2=NULL;
+        if(count1>=count2)
+            {
+                ptr = head1;
+                ptr2 = head2;
+            }
+        else
+            {
+                ptr = head2;
+                ptr2 = head1;
+            }
+        
+        int k = 0;
+        while(diff>0)
+        {
+            diff--;
+            ptr=ptr->next;
+        }
+       
+        int res=0;
+        while(ptr!=NULL && ptr2!=NULL){
+            if(ptr==ptr2)
+            {
+                res= ptr->data;
+                break;
+            }
+            ptr=ptr->next;
+            ptr2=ptr2->next;
+        }
+        return res;
+}
