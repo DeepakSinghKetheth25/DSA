@@ -1,0 +1,23 @@
+//Time Complexity -> O(n/2)
+//Space Complexity -> O(1)
+//Approach: i) Use slow & fast pointers.
+
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        
+        if(head==NULL || head->next==NULL)
+            return head;
+        
+        ListNode *slow=head, *fast=head;
+        
+        while(fast->next!=NULL && fast->next->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        
+        if(fast->next==NULL)
+            return slow;
+        return slow->next;
+    }
+};
