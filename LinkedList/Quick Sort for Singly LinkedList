@@ -1,0 +1,73 @@
+//Time Complexity -> O(n*n) worst Case
+
+node* getTail(struct node *head){
+    while(head!=NULL && head->next!=NULL)
+            head=head->next;
+        return head;
+}
+
+node* partition(node *head, node *end, node** newHead, node** newEnd){
+    
+    node *pivot = end;
+    node *prev=NULL,*curr=head,*tail=pivot;
+    
+    while(curr!=pivot){
+        
+        if(curr->data < pivot->data){
+            if(*newHead==NULL)
+                *newHead = curr;
+            prev=curr;
+            curr=curr->next;
+        }
+        else
+        {
+            if(prev)
+                prev->next = curr->next;
+            
+            node *temp=curr->next;
+            curr->next=NULL;
+            tail->next = curr;
+            tail=curr;
+            curr=temp;
+        }
+    }
+    
+    if((*newHead)==NULL)
+        *newHead=pivot;
+    
+    (*newEnd) = tail;
+    
+    return pivot;
+}
+
+
+node* quickSortUtil(node *head, node *end){
+    
+    if(head==NULL || head==end)
+        return head;
+        
+    node *newHead=NULL,*newTail = NULL;
+    node *pivot = partition(head,end,&newHead,&newTail);
+    
+    
+    if(newHead!=pivot){
+        
+        node *endptr = newHead;
+        while(endptr->next!=pivot){
+            endptr=endptr->next;
+        }
+        endptr->next=NULL;
+        
+        newHead = quickSortUtil(newHead,endptr);
+        
+        endptr = getTail(newHead);
+        endptr->next = pivot;        
+    }
+    
+    pivot->next = quickSortUtil(pivot->next,newTail);
+    return newHead;
+}
+
+void quickSort(struct node **headRef) {
+    *headRef = quickSortUtil(*headRef,getTail(*headRef));
+}
