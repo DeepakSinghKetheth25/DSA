@@ -1,0 +1,35 @@
+//Time Complexity-> O(min(size1,size2))
+//Space Complexity -> O(min(size1,size2))   where size1 = length of LL1
+                                                  size2 = length of LL2
+
+
+Node* findIntersection(Node* head1, Node* head2)
+{
+        
+        Node *head=NULL,*ptr1=NULL;
+        while(head1!=NULL && head2!=NULL)
+        {
+            if(head1->data<head2->data)
+                head1 = head1->next;
+            else if(head2->data<head1->data)
+                head2 = head2->next;
+            else
+            {
+                Node* temp = new Node(head1->data);
+                if(head!=NULL)
+                {
+                    ptr1->next = temp;
+                    ptr1=ptr1->next;
+                }
+                else
+                    {
+                        head=temp;
+                        ptr1 = head;
+                    }
+                
+                head1 = head1->next;
+                head2 = head2->next;
+            }
+        }
+        return head;     
+}
