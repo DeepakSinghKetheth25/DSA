@@ -1,0 +1,44 @@
+//Time Complexity -> O(n*n) ( For every element we are doing the concept of two pointers. )
+//Space Complexity -> O(1)
+//Approach :  For every element implement two pointers method.
+
+int countTriplets(Node* head, int x)
+{
+	  Node *curr=head,*start=NULL,*end=NULL;
+  	Node *newEnd=NULL;
+  	
+    start=curr->next;
+  	end=start->next;
+    
+    //Start should be curr->next
+    //End Should be at last
+    while(end->next!=NULL)
+        end=end->next;
+   	newEnd = end;
+	
+    int count=0;
+	
+  //Find triplets for numbers from start till third last element
+	while(curr->next!=end){
+        
+        int rem = x-(curr->data);
+        while(start!=NULL && end!=NULL && start->prev!=end && start!=end){
+          
+          if((start->data + end->data) == rem){
+                count++;
+				        start=start->next;
+              	end=end->prev;
+            }
+            else if((start->data + end->data) > rem){
+                end=end->prev;
+            }
+            else{
+                start=start->next;
+            }
+        }
+        curr=curr->next;
+      	start=curr->next;
+      	end=newEnd;
+    }    
+	return count;
+}
